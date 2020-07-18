@@ -3,9 +3,9 @@ from articles.models import Articles
 # Create your models here.
 class Sort(models.Model):
     sort_id = models.AutoField(primary_key=True, verbose_name='分类id')
-    sort_name = models.CharField(max_length=50, verbose_name='分类名称')
-    sort_description = models.CharField(max_length=50, verbose_name='分类描述')
-    parent_sort_id = models.BigIntegerField(verbose_name='父分类id')
+    sort_name = models.CharField(max_length=50, verbose_name='分类名称', null=True)
+    sort_description = models.CharField(max_length=50, verbose_name='分类描述', null=True)
+    parent_sort_id = models.BigIntegerField(verbose_name='父分类id', null=True)
 
     class Meta:
         db_table = 'kxj_sort'

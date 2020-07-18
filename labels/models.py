@@ -4,9 +4,9 @@ from articles.models import Articles
 # Create your models here.
 class Labels(models.Model):
     label_id = models.AutoField(primary_key=True, verbose_name='标签表id')
-    label_name = models.CharField(max_length=20, verbose_name='标签名称')
-    label_alias = models.CharField(max_length=20, verbose_name='标签别名')
-    label_description = models.CharField(max_length=50, verbose_name='标签描述')
+    label_name = models.CharField(max_length=20, verbose_name='标签名称', null=True)
+    label_alias = models.CharField(max_length=20, verbose_name='标签别名', null=True)
+    label_description = models.CharField(max_length=50, verbose_name='标签描述', null=True)
 
     class Meta:
         db_table = 'kxj_labels'

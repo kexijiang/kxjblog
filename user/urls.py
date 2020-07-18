@@ -16,9 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from user.views import RegisterView, LoginView
+
+app_name = 'user'
 urlpatterns = [
-    path('tinymce/', include('tinymce.urls')),
-    path('admin/', admin.site.urls),
-    path('articles/', include('articles.urls', namespace='articles'),),
-    path('user/', include('user.urls', namespace='user'),)
+    path('register/', RegisterView.as_view(), name='register'),
+    path('login/', LoginView.as_view(), name='login'),
 ]

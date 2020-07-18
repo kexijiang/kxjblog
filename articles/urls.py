@@ -16,9 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from articles.views import IndexView, ArticlesDetailView, ArticlesListView, Index1View
+from user.models import User
+app_name = 'articles'
 urlpatterns = [
-    path('tinymce/', include('tinymce.urls')),
-    path('admin/', admin.site.urls),
-    path('articles/', include('articles.urls', namespace='articles'),),
-    path('user/', include('user.urls', namespace='user'),)
+    path('index/', IndexView.as_view(), name='index'),
+    path('index1/<userObjJson>', Index1View.as_view(), name='index1'),
+    path('detail/<str:articles_id>', ArticlesDetailView.as_view(), name='detail'),
+    path('detail/<str:sort_id>', ArticlesListView.as_view(), name='list')
 ]

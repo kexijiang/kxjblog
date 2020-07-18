@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block main_left %}
+    <style>
+    .main_left{
+            display: inline;
+            margin-left: 2.5%;
+            width: 70%;
+            height: 500px;
+        }
+        .main_left_ul{
+            width: 70%;
+        }
+        .main_left span{
+            font-size: 14px;
+        }
+        .main_left p{
+            font-size: 18px;
+        }
+    </style>
+    <div class="main_left">
+        <ul class="main_left_ul">
+                {% for article in articles %}
+                    <li>
+                        <h3><a id="{{ article.article_id }}" href="#">{{ article.article_title }}</a></h3>
+                        <p><a id="{{ article.article_id }}" href="#">{{ article.article_introduce }}</a></p>
+                        <span>发布于:{{ article.article_date }}</span>
+                        <span>点赞数:{{ article.article_like_count }}</span>
+                        <span>查看数:{{ article.article_views }}</span>
+                        <span>评论数:{{ article.article_comment_count }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        <div>
+
+        </div>
+    </div>
+{% endblock %}

@@ -20,7 +20,7 @@ import sort
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
+APPEND_SLASH = False
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
@@ -47,7 +47,9 @@ INSTALLED_APPS = [
     'sort',  # 分类模块
     'labels',  # 标签模块
     'comments',  # 评论模块
-    'articles'  # 博文管理
+    'articles',  # 博文管理
+    'static',  # 静态文件
+    'bootstrap3'  # bootstrap
 ]
 
 MIDDLEWARE = [
@@ -65,7 +67,7 @@ ROOT_URLCONF = 'kxjblog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -138,6 +140,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIR = {
+    os.path.join(BASE_DIR, 'static')
+}
 # 富文本编辑器配置
 
 TINYMCE_DEFAULT_CONFIG={
