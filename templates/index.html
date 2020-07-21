@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block main_left %}
     <style>
-    .main_left{
+        .main_left{
             display: inline;
             margin-left: 2.5%;
             width: 70%;
@@ -21,8 +21,8 @@
         <ul class="main_left_ul">
                 {% for article in articles %}
                     <li>
-                        <h3><a id="{{ article.article_id }}" href="#">{{ article.article_title }}</a></h3>
-                        <p><a id="{{ article.article_id }}" href="#">{{ article.article_introduce }}</a></p>
+                        <h3><a id="{{ article.article_id }}" href="{% url 'articles:detail' article.article_id %}">{{ article.article_title }}</a></h3>
+                        <p><a id="{{ article.article_id }}" href="{% url 'articles:detail' article.article_id %}">{{ article.article_introduce }}</a></p>
                         <span>发布于:{{ article.article_date }}</span>
                         <span>点赞数:{{ article.article_like_count }}</span>
                         <span>查看数:{{ article.article_views }}</span>
@@ -30,8 +30,5 @@
                     </li>
                 {% endfor %}
             </ul>
-        <div>
-
-        </div>
     </div>
 {% endblock %}

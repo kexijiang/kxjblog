@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+<script type="text/javascript" src="{% static "js/jquery-1.12.4.min.js" %} "></script>
+{% block main_left %}
+    {% autoescape off %}
+        {{ article.article_content }}
+    {% endautoescape %}
+    <br/>
+    {% if  user.is_authenticated %}
+        <div class="form-group" id="comment">
+            {% csrf_token %}
+            <label for="text">评论区请留言:</label><input type="text" class="form-control" placeholder="欢迎说点什么哦" id="text">
+            <button id="sub" onclick="submit()" userid="{{ user.id }}" article_id = "{{ article.article_id }}" class="btn btn-default">提交</button>
+        </div>
+
+        <script>
+        $('#sub').click(function () {
+            let csrf = $('input[name="csrfmiddlewaretoken"]').val()
+            let article = $(this).attr("article_id")
+            let user = $(this).attr("userid")
+            let comment_content = $('#text').val()
+            let params = {'user':user,'article':article,'csrfmiddlewaretoken':csrf,'comment_content':comment_content}
+            $.post('/comment/comment/',params,function (data) {
+                if(data.res==1){
+                    alert(data.errmsg);
+                }else{
+                    let url = "/articles/detail/"+article
+                    location.href=url;
+                }
+            })
+        })
+
+
+        </script>
+    {% else %}
+        <a href="{% url 'user:login' %}" class="btn btn-default">登录</a>
+    {% endif %}
+
+    {% for comment in comments %}
+        <p id="comments" style="font-size: 8px;border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:grey;  ">
+            <span>{{ comment.user.username }}:</span>
+            {% autoescape off %}
+                <span>{{ comment.comment_content }}</span>
+            {% endautoescape %}
+            <span>{{ comment.comment_date }}</span>
+        </p>
+    {% endfor %}
+{% endblock main_left %}
+{% block comment %}
+    <textarea name="" id="" cols="40" rows="4"></textarea>
+{% endblock %}
+

@@ -19,7 +19,7 @@ from django.urls import path, include
 from articles.views import IndexView, ArticlesDetailView, ArticlesListView
 from comments.views import CommentView
 
-app_name = 'articles'
+app_name = 'comment'
 urlpatterns = [
     path('comment/', CommentView.as_view(), name='comment'),
 

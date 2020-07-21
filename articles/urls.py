@@ -21,7 +21,7 @@ from user.models import User
 app_name = 'articles'
 urlpatterns = [
     path('index/', IndexView.as_view(), name='index'),
-    path('index1/<userObjJson>', Index1View.as_view(), name='index1'),
+    path('index1/', Index1View.as_view(), name='index1'),
     path('detail/<str:articles_id>', ArticlesDetailView.as_view(), name='detail'),
     path('detail/<str:sort_id>', ArticlesListView.as_view(), name='list')
 ]

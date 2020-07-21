@@ -19,7 +19,7 @@ import sort
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+AUTH_USER_MODEL = 'user.User'
 APPEND_SLASH = False
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ['*', ]
 
 
 # Application definition
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -139,10 +140,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_URL = '/static/'
-STATICFILES_DIR = {
-    os.path.join(BASE_DIR, 'static')
-}
+
+
 # 富文本编辑器配置
 
 TINYMCE_DEFAULT_CONFIG={
@@ -150,3 +149,10 @@ TINYMCE_DEFAULT_CONFIG={
     'width': 600,
     'height': 400,
 }
+# 静态文件配置
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),  # 注意括号后面的还有个逗号
+)
+
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')

@@ -20,5 +20,6 @@ urlpatterns = [
     path('tinymce/', include('tinymce.urls')),
     path('admin/', admin.site.urls),
     path('articles/', include('articles.urls', namespace='articles'),),
-    path('user/', include('user.urls', namespace='user'),)
+    path('user/', include('user.urls', namespace='user'),),
+    path('comment/', include('comments.urls', namespace='comment'),)
 ]
