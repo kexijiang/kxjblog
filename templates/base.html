@@ -11,18 +11,21 @@
     <title>听风与你</title>
     <style>
         body{
-            display: block;
             font-family: 微软雅黑;
             font-size: 20px;
+            height: 100%;
             color: black;
-            {#background-color: dimgrey;#}
+            background-color: dimgrey; !important;
+        }
+        #body{
+            position: fixed;
+            top: 2.5%;
+            left: 2.5%;
         }
         #main{
-            margin-left: 2.5%;
-            margin-top: 2.5%;
+            overflow: auto;
             width: 95%;
             height: 95%;
-
         }
         .header_title{
             height: 50px;
@@ -105,14 +108,13 @@
             margin-top: 100px;
             margin-left: 5px;
         }
-        html, body{
-          margin:0px;
-          padding: 0px;
+        #particles-js{
+            z-index: -10;
         }
     </style>
-    <link rel="stylesheet" href="{% static 'js/particles.js' %}">
     <link rel="stylesheet" href="{% static 'css/iconfont.css' %}">
-<script type="text/javascript">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script type="text/javascript">
         if (!this.myPlugin) {
             this.myPlugin = {}
         }
@@ -333,11 +335,11 @@ this.myPlugin.clone = function (obj, deep) {
             });
         });
 </script>
-<script type="text/javascript" src="{% static 'js/http_cdn.bootcss.com_canvas-nest.js_1.0.1_canvas-nest.js' %}"></script>
 </head>
 <body >
-
-    <div id="main">
+<div id="particles-js">
+    <div id="body">
+        <div id="main">
         <div class="header_title" >
             <br/>
             <a href="#"  class="title"  title="听风与你个人博客">听风与你个人博客</a>
@@ -407,5 +409,9 @@ this.myPlugin.clone = function (obj, deep) {
 {#            </div>#}
 {#	    </footer>#}
     </div>
+    </div>
+</div>
+<script type="text/javascript" src="{% static 'js/particles.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/app.js' %}"></script>
 </body>
 </html>
