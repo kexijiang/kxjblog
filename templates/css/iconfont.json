@@ -1,0 +1,23 @@
+{
+  "id": "1963250",
+  "name": "no name",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "6253906",
+      "name": "iconfont icon-yonghu",
+      "font_class": "iconfonticon-yonghu",
+      "unicode": "e643",
+      "unicode_decimal": 58947
+    },
+    {
+      "icon_id": "1163061",
+      "name": "iconfont-8",
+      "font_class": "iconfont8",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    }
+  ]
+}

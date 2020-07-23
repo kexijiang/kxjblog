@@ -13,23 +13,22 @@
         body{
             display: block;
             font-family: 微软雅黑;
-            height: 20000px;
             font-size: 20px;
-            color: grey;
-            background-color: dimgrey;
+            color: black;
+            {#background-color: dimgrey;#}
         }
         #main{
             margin-left: 2.5%;
             margin-top: 2.5%;
             width: 95%;
             height: 95%;
-            background-color: aliceblue;
+
         }
         .header_title{
             height: 50px;
         }
         a{
-            color: grey;
+            color: black;
             text-decoration:none;
         }
         .title{
@@ -43,7 +42,7 @@
         .title_content{
             font-size: 14px;
             margin-left: 2.5%;
-            color:grey;
+            color:black;
         }
         .title:hover{
             text-decoration:none;
@@ -106,13 +105,238 @@
             margin-top: 100px;
             margin-left: 5px;
         }
+        html, body{
+          margin:0px;
+          padding: 0px;
+        }
     </style>
+    <link rel="stylesheet" href="{% static 'js/particles.js' %}">
+    <link rel="stylesheet" href="{% static 'css/iconfont.css' %}">
+<script type="text/javascript">
+        if (!this.myPlugin) {
+            this.myPlugin = {}
+        }
+        /**
+         * obj2混合到obj1中去  相同的属性 用obj2中的覆盖obj1中的
+         */
+        this.myPlugin.mixin = function (obj1, obj2) {
+            var newObj = {};                  //创建新的对象
+            for (var prop in obj2) {          //循环遍历obj2
+                newObj[prop] = obj2[prop];    //将obj2中的属性名和值依次赋给新对象
+            }
+            for (var prop in obj1) {          //循环遍历obj1
+                if (!(prop in obj2)) {        //判断obj1中的prop属性名不在obj2中
+                    newObj[prop] = obj1[prop];
+                }
+            }
+            return newObj;                    //返回新对象
+        }
 
-    <script>
+        //静态方法   var obj = Object.assign(obj1,obj2);       //将obj2混合到obj1中去     （会导致obj1发生变化）
+        //   也可以加obj3   意思是都混合到第一个obj1中去    var obj = Object.assign(obj1,obj2，obj3);
+        //    var obj = Object.assign({},obj1,obj2);    返回的总是第一个
 
-    </script>
+        /**
+ * 浅层克隆一个对象
+ * @param {boolean} deep  是否深度克隆
+ */
+this.myPlugin.clone = function (obj, deep) {
+    if (Array.isArray(obj)) {              //    判断是否为数组
+        if (deep) {
+            var newArr = [];
+            for (var i = 0; i < obj.length; i++) {
+                newArr.push(this.clone(obj[i], deep));    //利用递归来深度克隆
+            }
+            return newArr;
+        } else {
+            return obj.slice();      //    复制一个数组
+        }
+
+    } else if (typeof (obj) === "object") {   //判断是否为对象
+        var newObj = {};
+        for (var prop in obj) {
+            if (deep) {    //是否深度克隆
+                newObj[prop] = this.clone(obj[prop], deep);    //利用递归来深度克隆
+            } else {
+                newObj[prop] = obj[prop];
+            }
+        }
+        return newObj;
+    } else {                             // 是函数或者原始值的情况
+        return obj;                     //递归终止条件
+    }
+}
+        /**
+         * 动画
+         * @param {object} option 配置对象
+         */
+        this.myPlugin.Animate = function (option) {
+            // 默认配置
+            var defaultOption = {
+                duration: 16,   //默认间隔时间
+                total: 1000,    //运动总时间
+            }
+            //此句要heloers.js中的方法    将第二个参数混合到第一个参数中
+            this.option = myPlugin.mixin(defaultOption, option);
+            //运动总次数
+            this.number = Math.ceil(this.option.total / this.option.duration);
+            //每一次运动的距离
+            this.everyDistance = {};
+            for (var prop in this.option.begin) {
+                this.everyDistance[prop] = (this.option.end[prop] - this.option.begin[prop]) / this.number;
+            }
+            //当前运动到了第多少次
+            this.curNumber = 0;
+
+            //定时器的开关
+            this.timers = null;
+            //克隆一份初始的begin对象的属性
+            this.curData = myPlugin.clone(this.option.begin);
+        }
+        /**
+         * 写在原型链上 动画的函数
+         */
+        this.myPlugin.Animate.prototype.start = function () {
+            //在计时器中 事件是由window调用的  所以要先固定this的指向
+            var that = this;
+            if (this.timers || this.curNumber === this.number) {
+                return; //如果之前已经存在计时器，则不做任何处理
+            }
+            //当有给onstart函数时将其的this指向固定
+            if (this.option.onstart) {
+                this.option.onstart.call(that);
+            }
+            this.timers = setInterval(function () {
+                that.curNumber++;
+                // console.log(that.curNumber);
+                for (var prop in that.curData) {
+                    that.curData[prop] += that.everyDistance[prop];
+
+                }
+                if (that.option.onmove) {
+                    that.option.onmove.call(that);
+                }
+                // console.log(that.curNumber);
+                // console.log(that.curNumber);
+                //当事件触发次数达到预期值时 停止计时器
+                if (that.curNumber === that.number) {
+                    //为了解决 js的小数运算不精确的问题
+                    for (var prop in that.option.begin) {
+                        that.curData[prop] = that.option.end[prop];
+                    }
+                    // console.log("444");
+                    that.stop();
+                    // this.timers = null;
+                }
+                //当有给onmove函数时将其的this指向固定
+
+            }, this.option.duration);
+        }
+        // 动画停止的事件
+        this.myPlugin.Animate.prototype.stop = function () {
+            clearInterval(this.timers);
+            this.timers = null;
+            //当有给onover函数时将其的this指向固定
+            if (this.option.onover) {
+                this.option.onover.call(this);
+            }
+        }
+
+        // 点击小心心需要用到mouseclick.css、
+        //                 本js文件 、
+        //                 animate.js 、
+        //                  jquery.js
+        // 和网上的iconfont心心文件
+
+        // 思路：我是在点击时，创建了两个span元素，
+        // 定位是外层的定位body 内层的定位是参照外层的，
+        // 一个元素装的是心心的文字，内层的是放在上面的 ，
+        // 内层span的内容是：创建一个数组在数组中随机选取文字加入其中，
+        // 两个span的颜色都是统一且随机的，
+        // 然后将两个span加入到body中最下面 但是设置了z-index 所以在最前面，
+        // 然后利用我之前做好的动画插件 ，在一秒内匀速改变top、opacity的值，
+        // 在动画结束时销毁所创建的两个span元素
+
+        /**
+             * 得到一个最小值到最大值之间的随机整数
+             * @param {*} min 最小值
+             * @param {*} max 最大值
+             */
+        function getRandom(min, max) {
+            return Math.floor(Math.random() * (max + 1 - min) + min);
+        }
+        /**
+         * 主函数
+         */
+        $(document).ready(function () {
+            // 点击事件
+            $("body").click(function (e) {
+                var arr_text = ["小心心~", "爱你哦~",
+                    "么么哒~", "啦啦啦~", "么么哒~", "萨瓦迪卡~"];
+                var $span = $("<span class='iconfont'>&#xe608;</span>");
+                var $top_span = $("<span class='top_span'></span>");
+                // 获取鼠标点击处的坐标
+                var Y = e.pageY;
+                var X = e.pageX;
+                // 给内层span加文字
+                $top_span.text(arr_text[getRandom(0, arr_text.length - 1)]);
+                $span.append($top_span);
+                $($top_span).css({
+                    "display": "inline-block",
+                    "font-size": 12 + "px",
+                    "position": "absolute",
+                    "left": -10 + "px",
+                    "top": -14 + "px",
+                    "width": 50 + "px",
+                })
+                // console.log($(".top_span"));
+                $($span).css({
+                    // "width": 20,
+                    // "heigth": 20,
+                    "color": "rgb(" + ~~(getRandom(50, 255))
+                        + "," + ~~(getRandom(50, 255))
+                        + "," + (getRandom(50, 255))
+                        + ")",
+                    "z-index": 1,
+                    "position": "absolute",
+                    "left": (X - 7) + "px",
+                    "top": (Y - 10) + "px",
+                    "cursor": "pointer",
+
+                });
+                $("body").append($span);
+
+                // 动画函数 ，要注意this指向
+                var animate = new window.myPlugin.Animate({
+                    duration: 20,     //间隔时间
+                    total: 1000,      //运动总时间
+                    begin: {          //运动要改变的起始值
+                        a: (Y - 10),
+                        b: 1,
+                    },
+                    end: {            //运动改变的结束值
+                        a: (Y - 10 - 50),
+                        b: 0,
+                    },
+                    onstart: function () {    //动画开始时触发的事件
+                        // console.log("kaishi");
+                    },
+                    onmove: function () {       //动画进行时触发的事件（每一次改变）
+                        $span.css("top", this.curData.a + "px");
+                        $span.css("opacity", this.curData.b);
+                    },
+                    onover: function () {       //动画结束时触发的事件（常常用来再次触发）
+                        $span.remove();
+                    }
+                });
+                animate.start();   //开始动画函数
+            });
+        });
+</script>
+<script type="text/javascript" src="{% static 'js/http_cdn.bootcss.com_canvas-nest.js_1.0.1_canvas-nest.js' %}"></script>
 </head>
-<body>
+<body >
+
     <div id="main">
         <div class="header_title" >
             <br/>
@@ -126,7 +350,7 @@
                 <li><a id="{{ sort.sort_id }}" href="{% url 'articles:list' sort.sort_id %}">{{ sort.sort_name }}</a></li>
             {% endfor %}
         </ul>
-        <div class="main_left">
+        <div  class="main_left">
             {# 网页显示内容块 #}
             {% block main_left%}{% endblock main_left %}
         </div>
