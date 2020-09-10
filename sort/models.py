@@ -1,6 +1,8 @@
 from django.db import models
 from articles.models import Articles
 # Create your models here.
+
+
 class Sort(models.Model):
     sort_id = models.AutoField(primary_key=True, verbose_name='分类id')
     sort_name = models.CharField(max_length=50, verbose_name='分类名称', null=True)

@@ -16,12 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from articles.views import IndexView, ArticlesDetailView, ArticlesListView, Index1View
+from articles.views import IndexView, ArticlesDetailView, ArticlesListView, Index1View, ArticlesSearchView
 from user.models import User
 app_name = 'articles'
 urlpatterns = [
     path('index/', IndexView.as_view(), name='index'),
     path('index1/', Index1View.as_view(), name='index1'),
     path('detail/<str:articles_id>', ArticlesDetailView.as_view(), name='detail'),
-    path('detail/<str:sort_id>', ArticlesListView.as_view(), name='list')
+    path('detail1/<str:sort_id>', ArticlesListView.as_view(), name='list'),
+    path('search/', ArticlesSearchView.as_view(), name='search'),
 ]

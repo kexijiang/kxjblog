@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
@@ -29,6 +30,7 @@ class CommentView(View):
         if not all([article, user, comment_content]):
             return {'res': 1, 'errmsg': '参数不足!'}
         # 3.业务处理
+        # 插入评论
         article_id = article
         article = Articles.objects.get(article_id=article_id)
         user = User.objects.get(id=user)
@@ -38,6 +40,10 @@ class CommentView(View):
         comment.comment_content = comment_content
         comment.save()
         print("处理完成！")
+        # 将博文表中评论数进行更新
+        comments = Comment.objects.filter(article=article_id).aggregate(Count('comment_id'))
+        print(comments)
+        Articles.objects.filter(article_id=article_id).update(article_comment_count=comments['comment_id__count'])
         # 4.返回应答
         comments = Comment.objects.filter(article=article_id).order_by('-comment_date')
         return HttpResponse(comments)
