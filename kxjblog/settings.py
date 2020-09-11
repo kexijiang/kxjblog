@@ -151,8 +151,8 @@ TINYMCE_DEFAULT_CONFIG={
 }
 # 静态文件配置
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
+STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),  # 注意括号后面的还有个逗号
-)
+]
 
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
