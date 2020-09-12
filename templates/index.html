@@ -2,12 +2,7 @@
 {% load staticfiles %}
 {% block main_left %}
     <style>
-        .main_left{
-            display: inline;
-            margin-left: 2.5%;
-            width: 70%;
-            height: 500px;
-        }
+
         .main_left_ul{
             width: 70%;
         }
@@ -44,8 +39,8 @@
                         <h3><a id="{{ article.article_id }}" href="{% url 'articles:detail' article.article_id %}">{{ article.article_title }}</a></h3>
                         <p><a id="{{ article.article_id }}" href="{% url 'articles:detail' article.article_id %}">{{ article.article_introduce }}</a></p>
                         <span class="starttime"></span><span >{{ article.article_date }}</span>
-                        <span class="count"></span><span ><span >{{ article.article_comment_count }}</span>
-                        <span class="views"></span><span ><span >{{ article.article_views }}</span>
+                        <span class="count"></span><span >{{ article.article_comment_count }}</span>
+                        <span class="views"></span><span >{{ article.article_views }}</span>
                         <span>点赞数:{{ article.article_like_count }}</span>
                     </li>
                 {% endfor %}
