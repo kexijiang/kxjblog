@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kxjiang.blog.mapper.TArticlesMapper">
+  <resultMap id="BaseResultMap" type="com.kxjiang.blog.entity.TArticles">
+    <!--@mbg.generated-->
+    <!--@Table t_articles-->
+    <id column="article_id" jdbcType="INTEGER" property="articleId" />
+    <result column="article_title" jdbcType="VARCHAR" property="articleTitle" />
+    <result column="article_introduce" jdbcType="VARCHAR" property="articleIntroduce" />
+    <result column="article_content" jdbcType="LONGVARCHAR" property="articleContent" />
+    <result column="article_views" jdbcType="BIGINT" property="articleViews" />
+    <result column="article_comment_count" jdbcType="BIGINT" property="articleCommentCount" />
+    <result column="article_date" jdbcType="TIMESTAMP" property="articleDate" />
+    <result column="article_like_count" jdbcType="BIGINT" property="articleLikeCount" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    article_id, article_title, article_introduce, article_content, article_views, article_comment_count, 
+    article_date, article_like_count, user_id
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update  t_articles
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="article_title = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when article_id = #{item.articleId,jdbcType=INTEGER} then #{item.articleTitle,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="article_introduce = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when article_id = #{item.articleId,jdbcType=INTEGER} then #{item.articleIntroduce,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="article_content = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when article_id = #{item.articleId,jdbcType=INTEGER} then #{item.articleContent,jdbcType=LONGVARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="article_views = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when article_id = #{item.articleId,jdbcType=INTEGER} then #{item.articleViews,jdbcType=BIGINT}
+        </foreach>
+      </trim>
+      <trim prefix="article_comment_count = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when article_id = #{item.articleId,jdbcType=INTEGER} then #{item.articleCommentCount,jdbcType=BIGINT}
+        </foreach>
+      </trim>
+      <trim prefix="article_date = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when article_id = #{item.articleId,jdbcType=INTEGER} then #{item.articleDate,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+      <trim prefix="article_like_count = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when article_id = #{item.articleId,jdbcType=INTEGER} then #{item.articleLikeCount,jdbcType=BIGINT}
+        </foreach>
+      </trim>
+      <trim prefix="user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when article_id = #{item.articleId,jdbcType=INTEGER} then #{item.userId,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+    </trim>
+    where article_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.articleId,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update t_articles
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="article_title = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.articleTitle != null">
+            when article_id = #{item.articleId,jdbcType=INTEGER} then #{item.articleTitle,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="article_introduce = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.articleIntroduce != null">
+            when article_id = #{item.articleId,jdbcType=INTEGER} then #{item.articleIntroduce,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="article_content = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.articleContent != null">
+            when article_id = #{item.articleId,jdbcType=INTEGER} then #{item.articleContent,jdbcType=LONGVARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="article_views = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.articleViews != null">
+            when article_id = #{item.articleId,jdbcType=INTEGER} then #{item.articleViews,jdbcType=BIGINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="article_comment_count = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.articleCommentCount != null">
+            when article_id = #{item.articleId,jdbcType=INTEGER} then #{item.articleCommentCount,jdbcType=BIGINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="article_date = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.articleDate != null">
+            when article_id = #{item.articleId,jdbcType=INTEGER} then #{item.articleDate,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="article_like_count = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.articleLikeCount != null">
+            when article_id = #{item.articleId,jdbcType=INTEGER} then #{item.articleLikeCount,jdbcType=BIGINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.userId != null">
+            when article_id = #{item.articleId,jdbcType=INTEGER} then #{item.userId,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where article_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.articleId,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="article_id" keyProperty="articleId" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into t_articles
+    (article_title, article_introduce, article_content, article_views, article_comment_count, 
+      article_date, article_like_count, user_id)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.articleTitle,jdbcType=VARCHAR}, #{item.articleIntroduce,jdbcType=VARCHAR}, 
+        #{item.articleContent,jdbcType=LONGVARCHAR}, #{item.articleViews,jdbcType=BIGINT}, 
+        #{item.articleCommentCount,jdbcType=BIGINT}, #{item.articleDate,jdbcType=TIMESTAMP}, 
+        #{item.articleLikeCount,jdbcType=BIGINT}, #{item.userId,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="article_id" keyProperty="articleId" parameterType="com.kxjiang.blog.entity.TArticles" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into t_articles
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="articleId != null">
+        article_id,
+      </if>
+      article_title,
+      article_introduce,
+      article_content,
+      article_views,
+      article_comment_count,
+      article_date,
+      article_like_count,
+      user_id,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="articleId != null">
+        #{articleId,jdbcType=INTEGER},
+      </if>
+      #{articleTitle,jdbcType=VARCHAR},
+      #{articleIntroduce,jdbcType=VARCHAR},
+      #{articleContent,jdbcType=LONGVARCHAR},
+      #{articleViews,jdbcType=BIGINT},
+      #{articleCommentCount,jdbcType=BIGINT},
+      #{articleDate,jdbcType=TIMESTAMP},
+      #{articleLikeCount,jdbcType=BIGINT},
+      #{userId,jdbcType=INTEGER},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="articleId != null">
+        article_id = #{articleId,jdbcType=INTEGER},
+      </if>
+      article_title = #{articleTitle,jdbcType=VARCHAR},
+      article_introduce = #{articleIntroduce,jdbcType=VARCHAR},
+      article_content = #{articleContent,jdbcType=LONGVARCHAR},
+      article_views = #{articleViews,jdbcType=BIGINT},
+      article_comment_count = #{articleCommentCount,jdbcType=BIGINT},
+      article_date = #{articleDate,jdbcType=TIMESTAMP},
+      article_like_count = #{articleLikeCount,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=INTEGER},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="article_id" keyProperty="articleId" parameterType="com.kxjiang.blog.entity.TArticles" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into t_articles
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="articleId != null">
+        article_id,
+      </if>
+      <if test="articleTitle != null">
+        article_title,
+      </if>
+      <if test="articleIntroduce != null">
+        article_introduce,
+      </if>
+      <if test="articleContent != null">
+        article_content,
+      </if>
+      <if test="articleViews != null">
+        article_views,
+      </if>
+      <if test="articleCommentCount != null">
+        article_comment_count,
+      </if>
+      <if test="articleDate != null">
+        article_date,
+      </if>
+      <if test="articleLikeCount != null">
+        article_like_count,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="articleId != null">
+        #{articleId,jdbcType=INTEGER},
+      </if>
+      <if test="articleTitle != null">
+        #{articleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="articleIntroduce != null">
+        #{articleIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="articleContent != null">
+        #{articleContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="articleViews != null">
+        #{articleViews,jdbcType=BIGINT},
+      </if>
+      <if test="articleCommentCount != null">
+        #{articleCommentCount,jdbcType=BIGINT},
+      </if>
+      <if test="articleDate != null">
+        #{articleDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="articleLikeCount != null">
+        #{articleLikeCount,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="articleId != null">
+        article_id = #{articleId,jdbcType=INTEGER},
+      </if>
+      <if test="articleTitle != null">
+        article_title = #{articleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="articleIntroduce != null">
+        article_introduce = #{articleIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="articleContent != null">
+        article_content = #{articleContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="articleViews != null">
+        article_views = #{articleViews,jdbcType=BIGINT},
+      </if>
+      <if test="articleCommentCount != null">
+        article_comment_count = #{articleCommentCount,jdbcType=BIGINT},
+      </if>
+      <if test="articleDate != null">
+        article_date = #{articleDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="articleLikeCount != null">
+        article_like_count = #{articleLikeCount,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

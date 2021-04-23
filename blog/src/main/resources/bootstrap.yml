@@ -1,0 +1,13 @@
+spring:
+  cloud:
+    nacos:
+      # nacos的配置中心的配置
+      config:
+        server-addr: 49.234.214.32:8848
+        group: BLOG
+        name: blog
+        namespace: 4f4a5276-26fd-46bd-9658-bc242f9fff30
+        file-extension: yml
+      # nacos的注册中心的配置
+      discovery:
+        server-addr: 49.234.214.32:8848
