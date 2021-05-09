@@ -7,21 +7,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.annotation.Resource;
-import java.net.http.HttpResponse;
 import java.util.List;
 
 /**
- * @author: Jiang
- * @createTime: 2021-04-07 17:48
- * @description:
+ * 作者: Jiang
+ * 时间: 2021-04-07 17:48
+ * 描述: 博文表相关controller
  */
 @RestController
 @Api(tags = "博文表相关接口")
@@ -39,13 +34,23 @@ public class ArticlesController {
     })
     @ApiOperation(value = "查询博文表信息",notes = "查询博文表信息")
     public List<TArticles> getArticles(String userId, String articleId, String articleTitle){
-        if(StrUtil.isBlank(userId)) userId = "";
-        if(StrUtil.isBlank(articleId)) articleId = "";
-        if(StrUtil.isBlank(articleTitle)) articleTitle = "";
-        /*TArticles tArticles = new TArticles();
-        tArticles.setUserId(1);*/
-        TArticles tArticles = new TArticles();
+        if(StrUtil.isBlank(userId)) {
+            userId = "";
+        }
+        if(StrUtil.isBlank(articleId)) {
+            articleId = "";
+        }
+        if(StrUtil.isBlank(articleTitle)) {
+            articleTitle = "";
+        }
+        //TArticles tArticles = new TArticles();
 
         return articlesService.getArticles(userId, articleId, articleTitle);
+    }
+
+    @GetMapping(value = "/test")
+    @ApiOperation(value = "测试",notes = "测试")
+    public String testController(){
+        return "hello,docker";
     }
 }

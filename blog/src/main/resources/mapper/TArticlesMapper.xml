@@ -3,7 +3,7 @@
 <mapper namespace="com.kxjiang.blog.mapper.TArticlesMapper">
   <resultMap id="BaseResultMap" type="com.kxjiang.blog.entity.TArticles">
     <!--@mbg.generated-->
-    <!--@Table t_articles-->
+    <!--@Table blog.t_articles-->
     <id column="article_id" jdbcType="INTEGER" property="articleId" />
     <result column="article_title" jdbcType="VARCHAR" property="articleTitle" />
     <result column="article_introduce" jdbcType="VARCHAR" property="articleIntroduce" />
@@ -21,7 +21,7 @@
   </sql>
   <update id="updateBatch" parameterType="java.util.List">
     <!--@mbg.generated-->
-    update  t_articles
+    update blog.t_articles
     <trim prefix="set" suffixOverrides=",">
       <trim prefix="article_title = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
@@ -71,7 +71,7 @@
   </update>
   <update id="updateBatchSelective" parameterType="java.util.List">
     <!--@mbg.generated-->
-    update t_articles
+    update blog.t_articles
     <trim prefix="set" suffixOverrides=",">
       <trim prefix="article_title = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
@@ -137,7 +137,7 @@
   </update>
   <insert id="batchInsert" keyColumn="article_id" keyProperty="articleId" parameterType="map" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into t_articles
+    insert into blog.t_articles
     (article_title, article_introduce, article_content, article_views, article_comment_count, 
       article_date, article_like_count, user_id)
     values
@@ -150,7 +150,7 @@
   </insert>
   <insert id="insertOrUpdate" keyColumn="article_id" keyProperty="articleId" parameterType="com.kxjiang.blog.entity.TArticles" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into t_articles
+    insert into blog.t_articles
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="articleId != null">
         article_id,
@@ -195,7 +195,7 @@
   </insert>
   <insert id="insertOrUpdateSelective" keyColumn="article_id" keyProperty="articleId" parameterType="com.kxjiang.blog.entity.TArticles" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into t_articles
+    insert into blog.t_articles
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="articleId != null">
         article_id,
